@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    background-color: hsl(50, 50%, 50%);
+    color: hsl(50, 50%, 90%);
+    font-family: monospace;
+}
+header {
+    background-color: hsl(50, 50%, 30%);
+    overflow: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 1em;
+}
+nav {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+}
+nav a, nav span {
+    font-size: 1.4em;
+    padding: 0.25em 0.5em;
+    background-color: hsl(50, 50%, 70%);
+    text-decoration: none;
+    color: hsl(50, 50%, 10%);
+    border-radius: 5px;
+}
+nav span, nav a:hover {
+    background-color: hsl(50, 50%, 80%);
+}
+main {
+    display: flex;
+}
+canvas {
+    background-color: hsl(50, 20%, 70%);
+    border: 2px solid black;
+    margin: 1em auto;
+}
