@@ -124,19 +124,15 @@ class Player {
     handleContact() {
         while (this.contact()) {
             if (this.contactBottom()) {
-                console.log("bottom!");
                 this.y -= 1;
             }
             if (this.contactTop()) {
-                console.log("top!");
                 this.y += 1;
             }
             if (this.contactOnLeft()) {
-                console.log("on left!");
                 this.x += 1;
             }
             if (this.contactOnRight()) {
-                console.log("on right!");
                 this.x -= 1;
             }
         }
@@ -146,10 +142,15 @@ class Player {
     draw(ctx) {
         ctx.save();
         ctx.fillStyle = "hsl(200, 50%, 20%)";
-        ctx.fillRect(this.x - this.width/2, this.y - this.height / 2, this.width, this.height);
-        ctx.moveTo(this.x - this.width / 2, this.y + this.height / 4);
-        ctx.lineTo(this.x + this.width / 2, this.y + this.height / 4);
+        ctx.translate(this.x, this.y);
+        ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+        ctx.beginPath();
+        ctx.moveTo(-this.width / 3, this.height / 4);
+        ctx.quadraticCurveTo(0, this.height / 2, this.width / 3, this.height / 4);
         ctx.stroke();
+        ctx.fillStyle = "hsl(200, 50%, 50%)";
+        ctx.fillRect(-this.width / 3, -this.height / 4, this.width/10, this.height/10);
+        ctx.fillRect(this.width / 3, -this.height / 4, this.width/10, this.height/10);
         ctx.restore();
     }
 
@@ -167,7 +168,7 @@ class Game {
         this.ctx.strokeStyle = "hsl(200, 50%, 50%)";
         this.drawPlatforms(this.phantomCtx);
         this.gravity = 30;
-        this.player = new Player(500, 300, 20, 20, this.phantomCtx);
+        this.player = new Player(500, 300, 30, 30, this.phantomCtx);
         this.keys = {ArrowLeft: false, ArrowRight: false, ArrowUp: false};
         window.addEventListener('keydown', this.keydown.bind(this));
         window.addEventListener('keyup', this.keyup.bind(this));
@@ -209,7 +210,7 @@ class Game {
             ctx.lineTo(x + 50, y);
             ctx.stroke();
         }
-        for(let d = ctx.canvas.width / 3; d < ctx.canvas.width; d+=60) {
+        for(let d = ctx.canvas.width / 3; d < ctx.canvas.width; d+=70) {
             ctx.beginPath();
             ctx.moveTo(d, d);
             ctx.lineTo(d, ctx.canvas.height);
