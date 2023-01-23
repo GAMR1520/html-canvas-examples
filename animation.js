@@ -81,7 +81,6 @@ let prev;   // we will store the previous timestamp here
 function frame(timestamp) {
     elapsed = timestamp - (prev || timestamp);
     // Notice I'm calculating the number of seconds
-    console.log(elapsed);
     update(elapsed / 1000);
     draw(ctx);
     prev = timestamp;
