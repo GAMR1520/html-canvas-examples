@@ -168,7 +168,7 @@ class Game {
         this.ctx.strokeStyle = "hsl(200, 50%, 50%)";
         this.drawPlatforms(this.phantomCtx);
         this.gravity = 30;
-        this.player = new Player(500, 300, 30, 30, this.phantomCtx);
+        this.player = new Player(200, 300, 30, 30, this.phantomCtx);
         this.keys = {ArrowLeft: false, ArrowRight: false, ArrowUp: false};
         window.addEventListener('keydown', this.keydown.bind(this));
         window.addEventListener('keyup', this.keyup.bind(this));
