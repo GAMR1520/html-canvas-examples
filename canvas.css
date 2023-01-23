@@ -32,7 +32,7 @@ main {
     display: flex;
 }
 canvas {
-    background-color: hsl(50, 20%, 70%);
+    background-color: black;
     border: 2px solid hsl(200, 50%, 50%);
     margin: 1em auto;
     width: 600px;
