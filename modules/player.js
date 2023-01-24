@@ -1,5 +1,7 @@
+import Bullet from './bullet.js';
+
 export class Player {
-    constructor(x, y) {
+    constructor(x, y){
         this.x = x;
         this.y = y;
         this.target = {x: x, y: 0};
@@ -14,6 +16,10 @@ export class Player {
             x: this.x + Math.cos(this.angle) * 40,
             y: this.y + Math.sin(this.angle) * 40
         }
+    }
+
+    shoot() {
+        return new Bullet(this.muzzle, this.target);
     }
 
     draw(ctx) {

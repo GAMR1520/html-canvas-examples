@@ -3,7 +3,18 @@ import Scene from './modules/scene.js';
 canvas.width = 600;
 canvas.height = 600;
 const ctx = canvas.getContext("2d");
-const scene = new Scene(canvas);
+
+const gunSound = new Audio('./sounds/gun.mp3');
+const explosionSound = new Audio('./sounds/explosion.wav');
+explosionSound.load();
+let scene;
+gunSound.addEventListener('canplaythrough', ev1 => {
+    explosionSound.addEventListener('canplaythrough', ev2 => {      
+        scene = new Scene(canvas, gunSound, explosionSound);
+        requestAnimationFrame(frame);
+    });
+});
+
 
 let p;
 function frame(ts) {
@@ -21,7 +32,6 @@ function frame(ts) {
         requestAnimationFrame(frame);
     }   
 }
-requestAnimationFrame(frame);
 canvas.addEventListener('keydown', ev => {
     p = undefined;
     scene.restart();

@@ -1,34 +1,39 @@
 import { Player, updateTarget } from './player.js';
-import Bullet from './bullet.js';
 import Enemy from './enemy.js';
 
 function distance(ob1, ob2) {
     return ((ob1.x - ob2.x)**2 + (ob1.y - ob2.y)**2)**0.5;
 }
 function collision(ob1, ob2) {
-    return distance(ob1, ob2) < 40;
+    console.log(distance(ob1, ob2), ob1.hitbox, ob2.hitbox)
+    return distance(ob1, ob2) < (ob1.hitbox + ob2.hitbox);
 }
 
 export default class Scene {
 
-    constructor(canvas) {
+    constructor(canvas, gunSound, explosionSound) {
+        console.log(gunSound);
+        console.log(explosionSound);
         this.width = canvas.width;
         this.height = canvas.height;
-        this.player = new Player(this.width / 2, this.height);
+        this.player = new Player(this.width / 2, this.height, gunSound);
         this.bullets = [];
         this.enemies = [];
         this.level = 0;
         this.score = 0;
+        this.gunSound = gunSound;
+        this.explosionSound - explosionSound;
         canvas.addEventListener('mousemove', updateTarget.bind(this.player));
         canvas.addEventListener('mousedown', ev => {
-            this.bullets.push(new Bullet(this.player.muzzle, this.player.target));
+            this.bullets.push(this.player.shoot());
+            this.gunSound.cloneNode(true).play();
         });
     }
 
     update(elapsed) {
         this.bullets.forEach(bullet => {
             bullet.update(elapsed);
-            if (bullet.location.y < 0) {
+            if (bullet.y < 0) {
                 this.bullets.splice(this.bullets.indexOf(bullet), 1);
             }
         });
@@ -41,8 +46,10 @@ export default class Scene {
         // collision detection
         this.bullets.forEach(bullet => {
             this.enemies.forEach(enemy => {
-                if(collision(bullet.location, {x: enemy.x, y: enemy.y})) {
+                if(collision(bullet, enemy)) {
                     this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                    this.bullets.splice(this.bullets.indexOf(bullet), 1);
+                    this.explosionSound.cloneNode(true).play();
                     this.score += 1;
                 }
             })
